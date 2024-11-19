@@ -88,9 +88,9 @@ class TV:
     
     #condicones para el estado
     def condiciones1(self, canal, estado)->None:
-        if self.turnOn(estado) == "encendido" and self.canalUp(canal) >= 1 and self.canalUp(canal) <= 120 and self.canalDown(canal) <= 120 and self.canalDown(canal) >= 1:
+        if self.turnOn(estado) == True and self.canalUp(canal) >= 1 and self.canalUp(canal) <= 120 and self.canalDown(canal) <= 120 and self.canalDown(canal) >= 1:
             self._canal = canal 
         
     def condiciones2(self, volumen, estado)->None:
-        if self.turnOn(estado) == "encendido" and self.volumenUp(volumen) >= 0 and self.volumenUp(volumen) <=7 and self.volumenDown(volumen) >= 0 and self.volumenDown(volumen):
+        if self.turnOn(estado) == True and self.volumenUp(volumen) >= 0 and self.volumenUp(volumen) <=7 and self.volumenDown(volumen) >= 0 and self.volumenDown(volumen):
             self._volumen = volumen
