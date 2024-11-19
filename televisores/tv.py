@@ -1,12 +1,15 @@
+from __future__ import annotations
+from televisores.marca import Marca 
+
 class TV:
     _numTV = 0
-    def __init__(self, marca : Marca, canal:int, precio:int, estado:bool, volumen:int, control: Control):
+    def __init__(self, marca : Marca, estado:bool):
         self._marca = marca
-        self._canal = canal
-        self._precio = precio
+        self._canal = 1
+        self._precio = 500
         self._estado = estado
-        self._volumen = volumen
-        self._control = control
+        self._volumen = 1
+        self._control = None
         self._numTV += 1
 
     def estadoYmarca(self, marca, estado):
@@ -18,33 +21,33 @@ class TV:
     def setMarca(self,marca):
         self._marca = marca 
     
-    def setCanal(self):
-        self._canal = 1
+    def setCanal(self, canal):
+        self._canal = canal
 
-    def setPrecio(self):
-        self._precio = 500
+    def setPrecio(self, precio):
+        self._precio = precio
 
-    def setVolumen(self):
-        self._volumen = 1
+    def setVolumen(self, volumen):
+        self._volumen = volumen
     
     def setControl(self,control):
         self._control = control
 
     #metodo getters
     def getMarca(self):
-        return self.marca 
+        return self._marca 
     
     def getCanal(self):
-        return self.canal
+        return self._canal
 
     def getPrecio(self):
-        return self.precio
+        return self._precio
 
     def getVolumen(self):
-        return self.volumen
+        return self._volumen
     
     def getControl(self):
-        return self.control
+        return self._control
     
     #metodo pára contar televisores
     def numTv(self, numTV):
@@ -58,28 +61,30 @@ class TV:
         return self._numTV
     
     #metodo para saber si esta encendido o apagado
-    def turnOn(self, estado):
-        self.estadoYmarca(estado)
-    
-    def turnOff(self, estado):
-        self.estadoYmarca(estado)
+    def turnOn(self) -> None:
+        self._estado = True
+
+    def turnOff(self) -> None:
+        self._estado = False
+
      
     #metodo getter que retorna el atributo estado
-    def getEstado(self,estado):
-        return self.estadoYmarca(estado)
+    def getEstado(self,estado, marca):
+        return self.estadoYmarca(estado,marca)
     
     #metodos para subir de canal y de el volumen
-    def canalUp(self, canal):
-        self.setCanal(canal + 1)
+    def canalUp(self) -> None:
+        self.setCanal(self._canal + 1)
+
+    def canalDown(self) -> None:
+        self.setCanal(self._canal - 1)
+
     
-    def canalDonw(self, canal):
-        self.setCanal(canal - 1)
+    def volumenUp(self) -> None:
+        self.setVolumen(self._volumen + 1)
     
-    def volumenUp(self, volumen):
-        self.setVolumen(volumen + 1)
-    
-    def volumenDown(self, volumen):
-        self.setVolumen(volumen - 1)
+    def volumenDown(self)-> None:
+        self.setVolumen(self._volumen - 1)
     
     #condicones para el estado
     def condiciones1(self, canal, estado):
