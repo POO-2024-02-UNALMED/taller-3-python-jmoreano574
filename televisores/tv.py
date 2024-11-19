@@ -1,96 +1,94 @@
 from __future__ import annotations
-from televisores.marca import Marca 
+from televisores.marca import Marca
+from televisores.control import Control
 
 class TV:
     _numTV = 0
-    def __init__(self, marca : Marca, estado:bool):
+
+    def __init__(self, marca: Marca, estado: bool):
         self._marca = marca
         self._canal = 1
         self._precio = 500
         self._estado = estado
         self._volumen = 1
         self._control = None
-        self._numTV += 1
+        TV._numTV += 1  # Uso de la clase para incrementar el contador
 
-    def estadoYmarca(self, marca, estado):
-        if marca and estado == "encendido":
-            return True
-        else:
-            return False
-    #metodos setter 
-    def setMarca(self,marca):
-        self._marca = marca 
-    
-    def setCanal(self, canal):
-        self._canal = canal
+    # Métodos setters
+    def setMarca(self, marca: Marca):
+        self._marca = marca
 
-    def setPrecio(self, precio):
+    def setCanal(self, canal: int):
+        if self._estado and 1 <= canal <= 120:
+            self._canal = canal
+
+    def setPrecio(self, precio: int):
         self._precio = precio
 
-    def setVolumen(self, volumen):
-        self._volumen = volumen
-    
-    def setControl(self,control):
+    def setVolumen(self, volumen: int):
+        if self._estado and 0 <= volumen <= 7:
+            self._volumen = volumen
+
+    def setControl(self, control: Control):
         self._control = control
 
-    #metodo getters
-    def getMarca(self):
-        return self._marca 
-    
-    def getCanal(self):
+    # Métodos getters
+    def getMarca(self) -> Marca:
+        return self._marca
+
+    def getCanal(self) -> int:
         return self._canal
 
-    def getPrecio(self):
+    def getPrecio(self) -> int:
         return self._precio
 
-    def getVolumen(self):
+    def getVolumen(self) -> int:
         return self._volumen
-    
+
     def getControl(self):
         return self._control
-    
-    #metodo pára contar televisores
-    def numTv(self, numTV):
-        self._numTV = numTV
-    
-    #metodo setter y getter metodo pára contar televisores
-    def setnumTv(self, numTV):
-        self._numTV = numTV
-    
-    def getnumTv(self):
-        return self._numTV
-    
-    #metodo para saber si esta encendido o apagado
+
+    # Métodos para encender y apagar el televisor
     def turnOn(self) -> None:
         self._estado = True
 
     def turnOff(self) -> None:
         self._estado = False
 
-     
-    #metodo getter que retorna el atributo estado
-    def getEstado(self,estado, marca):
-        return self.estadoYmarca(estado,marca)
-    
-    #metodos para subir de canal y de el volumen
+    def getEstado(self) -> bool:
+        return self._estado
+
+    # Métodos para cambiar de canal y volumen
     def canalUp(self) -> None:
-        self.setCanal(self._canal + 1)
+        if self._estado and self._canal < 120:
+            self._canal += 1
 
     def canalDown(self) -> None:
-        self.setCanal(self._canal - 1)
+        if self._estado and self._canal > 1:
+            self._canal -= 1
 
-    
     def volumenUp(self) -> None:
-        self.setVolumen(self._volumen + 1)
-    
-    def volumenDown(self)-> None:
-        self.setVolumen(self._volumen - 1)
-    
-    #condicones para el estado
-    def condiciones1(self, canal, estado):
-        if self.turnOn(estado) == "encendido" and self.canalUp(canal) >= 1 and self.canalUp(canal) <= 120 and self.canalDown(canal) <= 120 and self.canalDown(canal) >= 1:
-            self._canal = canal 
-        
-    def condiciones2(self, volumen, estado):
-        if self.turnOn(estado) == "encendido" and self.volumenUp(volumen) >= 0 and self.volumenUp(volumen) <=7 and self.volumenDown(volumen) >= 0 and self.volumenDown(volumen):
+        if self._estado and self._volumen < 7:
+            self._volumen += 1
+
+    def volumenDown(self) -> None:
+        if self._estado and self._volumen > 0:
+            self._volumen -= 1
+
+    # Método para obtener el número de televisores
+    @classmethod
+    def getNumTV(cls):
+        return cls._numTV
+
+    # Métodos para condiciones (ajustados)
+    def condiciones1(self, canal):
+        if self._estado and 1 <= canal <= 120:
+            self._canal = canal
+
+    def condiciones2(self, volumen):
+        if self._estado and 0 <= volumen <= 7:
             self._volumen = volumen
+
+    # Métodos para establecer y obtener el número de televisores 
+    def setNumTV(cls, numTV: int):
+        cls._numTV = numTV
