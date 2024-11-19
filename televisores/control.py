@@ -1,5 +1,3 @@
-from televisores.tv import Tv
-
 class Control:
     def __init__(self,tv:Tv):
         self.tv = tv 
