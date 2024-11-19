@@ -54,11 +54,11 @@ class TV:
         self._numTV = numTV
     
     #metodo setter y getter metodo pára contar televisores
-    def setnumTv(self, numTV)->None:
-        self._numTV = numTV
+    def setnumTv(cls, numTV)->None:
+        cls._numTV = numTV
     
-    def getnumTv(self):
-        return self._numTV
+    def getnumTv(cls):
+        return cls._numTV
     
     #metodo para saber si esta encendido o apagado
     def turnOn(self) -> None:
